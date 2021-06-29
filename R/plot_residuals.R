@@ -1,9 +1,14 @@
 
 #' Make a plot of residuals vs fitted values
 #' 
-#' @param model an lm object.
+#' Plot residuals against fitted values to check for 
+#' homoscedasticity. 
 #' 
-#' @return a ggplot object
+#' @param model an lm object. The function will extract
+#'   residuals and fitted values from the model object.
+#' 
+#' @return a ggplot object. A plot showing residual on the
+#'   y-axis and fitted value on the x-axis.
 #' 
 #' @import ggplot2
 #' 
@@ -13,6 +18,7 @@
 #' 
 #' model <- lm(mpg~wt, data = mtcars)
 #' plot <- plot_residuals(model)
+#' plot
 
 plot_residuals <- function(model) {
   
@@ -26,18 +32,27 @@ plot_residuals <- function(model) {
   # ?fitted.values
   # ?residuals
   
+  fitted_values <- fitted.values(model)
+  resid <- residuals(model)
+  
   # Make a data frame with these two vectors using data.frame() 
   
-  residual_df <- data.frame()
+  residual_df <- data.frame(
+    fitted_values = fitted_values,
+    resdiduals = resid
+  )
   
   # Now use the data frame with ggplot2
   
-  plot <- ggplot() + # Fill in the 'data' argument in this function
-    geom_point() + # Fill in the 'mapping' argument in this function
+  plot <- ggplot(data = residual_df) + # Fill in the 'data' argument in this function
+    geom_point(mapping = aes(x = fitted_values, y = resdiduals)) + # Fill in the 'mapping' argument in this function
     geom_hline(yintercept = 0) +
+    xlab("Fitted values") +
+    ylab("Residual") +
+    ggtitle("Residual vs fitted value") +
     theme_bw()
   
   # We need to return our plot
-  return(0)
+  return(plot)
   
 }

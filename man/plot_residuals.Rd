@@ -7,16 +7,20 @@
 plot_residuals(model)
 }
 \arguments{
-\item{model}{an lm object.}
+\item{model}{an lm object. The function will extract
+residuals and fitted values from the model object.}
 }
 \value{
-a ggplot object
+a ggplot object. A plot showing residual on the
+  y-axis and fitted value on the x-axis.
 }
 \description{
-Make a plot of residuals vs fitted values
+Plot residuals against fitted values to check for 
+homoscedasticity.
 }
 \examples{
 
 model <- lm(mpg~wt, data = mtcars)
 plot <- plot_residuals(model)
+plot
 }
